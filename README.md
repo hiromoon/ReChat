@@ -1,0 +1,2 @@
+# ReChat
+Elixir/PhoenixとReactをWebsocketで接続するサンプル
