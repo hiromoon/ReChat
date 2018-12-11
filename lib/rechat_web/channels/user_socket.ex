@@ -2,7 +2,7 @@ defmodule RechatWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", RechatWeb.RoomChannel
+  channel "room:*", RechatWeb.RoomChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
