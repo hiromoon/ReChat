@@ -1,3 +1,4 @@
 import { combineReducers } from 'redux'
+import Form from './Form'
 
-export default combineReducers({})
+export default combineReducers({Form})
