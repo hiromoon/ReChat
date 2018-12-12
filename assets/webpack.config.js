@@ -1,41 +1,47 @@
-const path = require('path');
-const glob = require('glob');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path')
+const CONTENT_PATH = path.resolve(path.join(__dirname, '../priv/static'))
+const NODE_ENV = process.env.NODE_ENV || 'production'
 
-module.exports = (env, options) => ({
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({ cache: true, parallel: true, sourceMap: false }),
-      new OptimizeCSSAssetsPlugin({})
-    ]
-  },
+module.exports = {
+  mode: NODE_ENV,
   entry: {
-      './js/app.js': ['./js/app.js'].concat(glob.sync('./vendor/**/*.js'))
+    app: ['./js/main.js']
   },
   output: {
-    filename: 'app.js',
-    path: path.resolve(__dirname, '../priv/static/js')
+    filename: 'js/app.js',
+    path: CONTENT_PATH
+  },
+  devServer: {
+    contentBase: CONTENT_PATH,
+    historyApiFallback: true,
+    hot: false,
+    inline: true,
+    port: 8080,
+    proxy: {
+      '/admin/api': 'http://localhost:4000'
+    }
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        }
+        use: 'babel-loader',
+        exclude: /node_modules/
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        use: [
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 1
+            }
+          }
+        ]
       }
     ]
   },
-  plugins: [
-    new MiniCssExtractPlugin({ filename: '../css/app.css' }),
-    new CopyWebpackPlugin([{ from: 'static/', to: '../' }])
-  ]
-});
+  devtool: 'inline-source-map'
+}

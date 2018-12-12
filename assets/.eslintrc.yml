@@ -1,0 +1,21 @@
+parser: 'babel-eslint'
+plugins:
+  - react
+  - prettier
+extends:
+  - google
+  - plugin:react/recommended
+  - prettier
+  - prettier/react
+settings:
+  react:
+    version: "16.6.0"
+rules:
+  prettier/prettier:
+    - 2
+    -
+      trailingComma: none
+      singleQuote: true
+      semi: false
+  react/jsx-uses-vars: 
+    - 1
