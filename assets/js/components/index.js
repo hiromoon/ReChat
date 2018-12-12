@@ -23,7 +23,6 @@ const styles = theme => ({
 
 const App = props => {
   const { classes, onChange, onClick, text, comments } = props
-  console.log({ comments })
   return (
     <div className={classes.container}>
       <div className={classes.form}>

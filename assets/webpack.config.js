@@ -18,7 +18,10 @@ module.exports = {
     inline: true,
     port: 8080,
     proxy: {
-      '/admin/api': 'http://localhost:4000'
+      '/socket/websocket': {
+        target: 'ws://localhost:4000',
+        ws: true
+      }
     }
   },
   module: {

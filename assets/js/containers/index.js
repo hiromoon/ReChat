@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import AppComponent from '../components'
-import { textChange, addComment } from '../actions'
+import { textChange, /* addComment,*/ join, push, leave } from '../actions'
 
 /** Main */
 class App extends React.Component {
@@ -13,6 +13,22 @@ class App extends React.Component {
     this.onClickHandle = this.onClickHandle.bind(this)
     this.onChangeHandle = this.onChangeHandle.bind(this)
   }
+
+  /**
+   * ページ全体のコンポーネントが読み込まれたらWebsocketを接続しに行く
+   */
+  componentDidMount() {
+    const { dispatch } = this.props
+    join(dispatch)
+  }
+
+  /**
+   * コンポーネントがアンマウントされるときにchannleを閉じる
+   */
+  componentWillUnMount() {
+    leave()
+  }
+
   /**
    * onChangeHandle
    * @param {object} event event
@@ -25,8 +41,9 @@ class App extends React.Component {
    * onClickHandle
    */
   onClickHandle() {
-    const { dispatch, text } = this.props
-    dispatch(addComment(text))
+    const { /* dispatch,*/ text } = this.props
+    push(text)
+    // dispatch(addComment(text))
   }
   /**
    * @return {Object} jsx

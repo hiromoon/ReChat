@@ -1,4 +1,4 @@
-import { TEXT_CHANGE, ADD_COMMENT } from '../actions'
+import { TEXT_CHANGE, /* ADD_COMMENT,*/ RECIEVE_COMMENT } from '../actions'
 
 const initialState = {
   text: '',
@@ -11,11 +11,12 @@ export default (state = initialState, action) => {
         ...state,
         text: action.text
       }
-    case ADD_COMMENT:
-      console.log({ comments: state.comments.concat([action.comment]) })
+    case RECIEVE_COMMENT:
+      console.log(action.comment)
       return {
         ...state,
-        comments: state.comments.concat([action.comment])
+        comments: state.comments.concat([action.comment]),
+        text: ''
       }
     default:
       return state
